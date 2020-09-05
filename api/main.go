@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"gopkg.in/go-playground/validator.v8"
 	"gotodo/conf"
+	"gotodo/model"
 	"gotodo/serializer"
 	"gotodo/service"
 )
@@ -16,6 +17,17 @@ func Ping(c *gin.Context) {
 		Msg:    "Pong",
 	})
 }
+
+// CurrentUser 获取当前用户
+func CurrentUser(c *gin.Context) *model.User {
+	if user, _ := c.Get("user"); user != nil {
+		if u, ok := user.(*model.User); ok {
+			return u
+		}
+	}
+	return nil
+}
+
 
 func CreateTodo(c *gin.Context) {
 	todoService := service.CreateTodoService{}
@@ -28,13 +40,20 @@ func CreateTodo(c *gin.Context) {
 }
 
 func ListTodos(c *gin.Context)  {
-	service := service.ListTodoService{}
-	if err := c.ShouldBind(&service); err == nil {
-		res := service.List()
+	todoService := service.ListTodoService{} // 分页
+	if err := c.ShouldBind(&todoService); err == nil {
+		res := todoService.List()
 		c.JSON(200, res)
 	} else {
 		c.JSON(200, ErrorResponse(err))
 	}
+}
+
+// ShowVideo 视频详情接口
+func ShowTodo(c *gin.Context) {
+	service := service.ShowTodoService{}
+	res := service.Show(c.Param("id"))
+	c.JSON(200, res)
 }
 
 

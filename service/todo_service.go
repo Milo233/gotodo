@@ -34,6 +34,31 @@ func (service *CreateTodoService) Create() serializer.Response {
 	}
 }
 
+// ShowTodoService 投稿详情的服务
+type ShowTodoService struct {
+}
+
+// Show 视频
+func (service *ShowTodoService) Show(id string) serializer.Response {
+	var video model.Todo
+	err := model.DB.First(&video, id).Error
+	if err != nil {
+		return serializer.Response{
+			Status: 404,
+			Msg:    "视频不存在",
+			Error:  err.Error(),
+		}
+	}
+
+	//处理视频被观看的一系问题
+	//video.AddView() 增加点击etc
+
+	return serializer.Response{
+		Data: serializer.BuildTodo(video),
+	}
+}
+
+
 // ListTodoService 视频列表服务
 type ListTodoService struct {
 	Limit int `form:"limit"`
