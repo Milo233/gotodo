@@ -1,6 +1,8 @@
 package service
 
 import (
+	//"github.com/gin-contrib/sessions"
+	//"github.com/gin-gonic/gin"
 	"gotodo/model"
 	"gotodo/serializer"
 )
@@ -9,16 +11,23 @@ import (
 type CreateTodoService struct {
 	Title  string `form:"title" json:"title" binding:"required,min=2,max=100"`
 	Info   string `form:"info" json:"info" binding:"max=3000"`
-	//URL    string `form:"url" json:"url"`
-	//Avatar string `form:"avatar" json:"avatar"`
+	Url    string `form:"url" json:"url"`
+	Notify    bool `form:"notify" json:"notify"`
 }
 
-// Create 创建视频
+// Create 创建todo
 func (service *CreateTodoService) Create() serializer.Response {
-	todo := model.Todo{
+	todo := model.Todo {
 		Title:  service.Title,
 		Info:   service.Info,
+		Url:   service.Url,
+		Notify:   service.Notify,
 	}
+
+	// 设置默认值，userid。。
+	//session := sessions.Default(c)
+	//uid := session.Get("user_id")
+	//todo.UserId = uid
 
 	err := model.DB.Create(&todo).Error
 	if err != nil {

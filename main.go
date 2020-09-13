@@ -11,7 +11,6 @@ import (
 // 项目根目录的main.go文件，用于启动项目
 func main() {
 	//cmdExec("calc","")
-	//
 	conf.Init() // 初始化项目配置。数据库 etc
 	router := server.NewRouter()
 	router.Run(":3000")

@@ -7,6 +7,9 @@ type Todo struct {
 	gorm.Model
 	Title  string
 	Info   string
+	Url   string
+	Notify   bool
+	UserId   int64
 }
 
 

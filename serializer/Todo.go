@@ -7,6 +7,7 @@ type Todo struct {
 	ID        uint   `json:"id"`
 	Title     string `json:"title"`
 	Info      string `json:"info"`
+	Url      string `json:"url"`
 	CreatedAt int64  `json:"created_at"`
 }
 
@@ -16,6 +17,7 @@ func BuildTodo(item model.Todo) Todo {
 		ID:        item.ID,
 		Title:     item.Title,
 		Info:      item.Info,
+		Url:       item.Url,
 		CreatedAt: item.CreatedAt.Unix(),
 	}
 }
