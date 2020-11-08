@@ -49,6 +49,16 @@ func ListTodos(c *gin.Context)  {
 	}
 }
 
+func ReadBook(c *gin.Context)  {
+	bookService := service.ReadBookService{} // 分页
+	if err := c.ShouldBind(&bookService); err == nil {
+		resultMap := bookService.ReadBook()
+		c.JSON(200, resultMap)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
 // ShowVideo 视频详情接口
 func ShowTodo(c *gin.Context) {
 	service := service.ShowTodoService{}

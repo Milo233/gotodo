@@ -18,6 +18,7 @@ func NewRouter() *gin.Engine {
 	// 路由
 	v1 := r.Group("/api/v1")
 	{
+		//todo add 查询link的接口
 		v1.GET("ping", api.Ping)
 		// 用户注册 不让注册...
 		// v1.POST("user/register", api.UserRegister)
@@ -27,6 +28,7 @@ func NewRouter() *gin.Engine {
 		v1.DELETE("user/logout", api.UserLogout)
 		// 查询当前登录用户信息
 		v1.GET("user/me", api.UserMe)
+
 		// 需要登录保护的
 		authed := v1.Group("/")
 		authed.Use(middleware.AuthRequired())
@@ -40,6 +42,7 @@ func NewRouter() *gin.Engine {
 			authed.GET("todo/:id", api.ShowTodo)
 			// 改
 			//authed.DELETE("user/logout", api.UserLogout)
+			authed.GET("book/read", api.ReadBook)
 		}
 
 	}

@@ -49,8 +49,8 @@ type ShowTodoService struct {
 
 // Show 视频
 func (service *ShowTodoService) Show(id string) serializer.Response {
-	var video model.Todo
-	err := model.DB.First(&video, id).Error
+	var todo model.Todo
+	err := model.DB.First(&todo, id).Error
 	if err != nil {
 		return serializer.Response{
 			Status: 404,
@@ -61,9 +61,8 @@ func (service *ShowTodoService) Show(id string) serializer.Response {
 
 	//处理视频被观看的一系问题
 	//video.AddView() 增加点击etc
-
 	return serializer.Response{
-		Data: serializer.BuildTodo(video),
+		Data: serializer.BuildTodo(todo),
 	}
 }
 
