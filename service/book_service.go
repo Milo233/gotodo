@@ -20,8 +20,8 @@ func (service *ReadBookService) ReadBook()  map[string]string{
 	//total := 0
 	var book model.Book
 	model.DB.Where("file = ?",service.BookName).Find(&book)
-	if service.Index < 0 {
-		// todo 查询数据库 读取文件上次读到第几页了
+	if service.Index <= 0 {
+		// 查询数据库 读取文件上次读到第几页了
 		service.Index = book.CurrentPage
 	} else {
 		// update current_page
@@ -30,6 +30,7 @@ func (service *ReadBookService) ReadBook()  map[string]string{
 	}
 
 	var resultMap = make(map[string]string)
+	resultMap["total"] = strconv.Itoa(book.Lines / service.PageSize)
 	resultMap["index"] = strconv.Itoa(service.Index)
 	lastPageContent, current, nextPageContent := ReadLine(service.BookName, service.Index, service.PageSize)
 	resultMap["lastPageContent"] = lastPageContent
@@ -40,7 +41,6 @@ func (service *ReadBookService) ReadBook()  map[string]string{
 
 // 太慢可以预加载,
 func ReadLine(filename string,index int,pagesize int) (string,string,string) {
-	// todo 返回頁數 etc
 	lineNumber := pagesize * (index - 1) + 1
 	file, _ := os.Open(filename)
 	fileScanner := bufio.NewScanner(file)
