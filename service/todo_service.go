@@ -66,6 +66,11 @@ func (service *ShowTodoService) Show(id string) serializer.Response {
 	}
 }
 
+func (service *ShowTodoService) Delete(id string) {
+	var todo model.Todo
+	model.DB.Delete(&todo, id)
+}
+
 
 // ListTodoService 视频列表服务
 type ListTodoService struct {

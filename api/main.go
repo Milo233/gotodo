@@ -66,6 +66,12 @@ func ShowTodo(c *gin.Context) {
 	c.JSON(200, res)
 }
 
+// ShowVideo 视频详情接口
+func DeleteTodo(c *gin.Context) {
+	service := service.ShowTodoService{}
+	service.Delete(c.Param("id"))
+}
+
 
 // ErrorResponse 返回错误消息
 func ErrorResponse(err error) serializer.Response {

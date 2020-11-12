@@ -43,6 +43,8 @@ func NewRouter() *gin.Engine {
 			// 改
 			//authed.DELETE("user/logout", api.UserLogout)
 			authed.GET("book/read", api.ReadBook)
+
+			authed.DELETE("todo/:id",api.DeleteTodo)
 		}
 
 	}
