@@ -16,8 +16,6 @@ type ReadBookService struct {
 
 //func (service *ReadBookService) ReadBook() serializer.Response {
 func (service *ReadBookService) ReadBook()  map[string]string{
-	//todos := []model.Todo{}
-	//total := 0
 	var book model.Book
 	model.DB.Where("file = ?",service.BookName).Find(&book)
 	if service.Index <= 0 {
@@ -42,7 +40,7 @@ func (service *ReadBookService) ReadBook()  map[string]string{
 // 太慢可以预加载,
 func ReadLine(filename string,index int,pagesize int) (string,string,string) {
 	lineNumber := pagesize * (index - 1) + 1
-	file, _ := os.Open(filename)
+	file, _ := os.Open("files/" + filename)
 	fileScanner := bufio.NewScanner(file)
 	currentLine := 1
 	lastPageContent := ""

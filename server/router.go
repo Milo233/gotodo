@@ -3,6 +3,7 @@ package server
 import (
 	"github.com/gin-gonic/gin"
 	"gotodo/api"
+	"gotodo/filemanager"
 	"gotodo/middleware"
 	"os"
 )
@@ -45,8 +46,9 @@ func NewRouter() *gin.Engine {
 			authed.GET("book/read", api.ReadBook)
 
 			authed.DELETE("todo/:id",api.DeleteTodo)
+			// file 操作
+			authed.POST("/file",filemanager.UploadFileHandler)
 		}
-
 	}
 
 	return r
